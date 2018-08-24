@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>测试</title>
+	<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
+	<style type="text/css">
+		.green {
+			background-color: green;
+		}
+		.current {
+			background-color: blue;
+		}
+
+	</style>
+</head>
+<body>
+	<div>
+		<ul class="timu">
+			<li>11</li>
+			<li>12</li>
+			<li>13</li>
+			<li>14</li>
+			<li class="current">15</li>
+			<li>16</li>
+			<li>17</li>
+			<li>18</li>
+		</ul>
+	</div>
+	<div>
+		<ul class="timu">
+			<li>21</li>
+			<li>22</li>
+			<li>23</li>
+			<li>24</li>
+			<li>25</li>
+		</ul>
+	</div>
+	<input type="button" name="pre_btn" value="previous" onclick="previousClick();" />
+	<input type="button" name="pre_btn" value="next" onclick="nextClick();" />
+	<script type="text/javascript">
+		$(function(){
+			// 使用jquery绑定事件，在使用c:for标签循环时，可以改成
+			$("li").each(function(index,element){
+				$(element).bind('click',function(){
+					var liList = $("li");
+					liList.each(function(index,element){
+						if ($(element).hasClass("current")) {
+							$(element).removeClass("current");/* 移除current class */
+							return false;/* 不再继续循环 */
+						}
+					});
+					$(element).addClass("current");
+				});
+			});
+		});
+
+		function previousClick(){
+			var liList = $("li");
+			liList.each(function(index,element){
+				/* 如果当前元素有current class AND 不是第一个*/
+				if ($(element).hasClass("current") && index > 0) {
+					$(element).removeClass("current");/* 移除current class */
+					liList.eq(index - 1).addClass("current");/* 给上一项添加current class */
+					return false;/* 不再继续循环 */
+				}
+			});
+		}
+
+		function nextClick(){
+			var liList = $("li");
+			var length = liList.length;
+			liList.each(function(index,element){
+				/* 如果当前元素有current class AND 不是第一个*/
+				if ($(element).hasClass("current") && index < length - 1 ) {
+					$(element).removeClass("current");/* 移除current class */
+					liList.eq(index + 1).addClass("current");/* 给上一项添加current class */
+					return false;/* 不再继续循环 */
+				}
+			});
+		}
+	</script>
+</body>
+</html>
